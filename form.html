@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Form</title>
+</head>
+
+<body>
+    <div class="form">
+        <form action="/web-2-task-3/index.php" method="POST">
+            <div>
+                <h1 id="form-header">Form</h1>
+            </div>
+            <div class="form-element">
+                <label for="name">Name:</label>
+                <input type="text" name="name">
+            </div>
+            <div class="form-element">
+                <label for="text">Telephone:</label>
+                <input type="tel" name="tel">
+            </div>
+
+            <div class="form-element">
+                <label>E-male:</label>
+                <input type="email" name="emale">
+            </div>
+
+            <div class="form-element">
+                <label>B-day:</label>
+                <input type="date" name="bday">
+            </div>
+
+            <div class="form-element">
+                <label>Sex:</label>
+                <input type="radio" name="sex" > Female
+                <input type="radio" name="sex" > Male
+            </div>
+
+            <div class="form-element">
+                <label>Favorite PL:</label>
+                <select name="pl" multiple="multiple">
+                    <option value="pascal">Pascal</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                    <option value="js">JavaScript</option>
+                    <option value="php">PHP</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="haskel">Haskel</option>
+                    <option value="clojure">Clojure</option>
+                    <option value="prolog">Prolog</option>
+                    <option value="scala">Scala</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <label>Bio:</label>
+                <textarea></textarea>
+            </div>
+
+            
+            <div class="form-acception">
+                <input type="checkbox" name="acception">Acception
+            </div>
+            <div class="form-acception">
+                <input type="submit" name="submition">
+            </div>
+            
+        </form>
+    </div>
+</body>
+
+</html>
