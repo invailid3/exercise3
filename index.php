@@ -53,7 +53,7 @@ if(empty($_POST['acception'])){
 }
 
 if($status != 1){
-    header(sprintf('Location: /web-2-task-3/?status=%d', $status));
+    header(sprintf('Location: /exercise3/?status=%d', $status));
     exit();
 }
 
@@ -85,4 +85,4 @@ foreach ($_POST['pl'] as $pl){
 }
 
 
-header('Location: /web-2-task-3/?status=1');
+header('Location: /exercise3/?status=1');
