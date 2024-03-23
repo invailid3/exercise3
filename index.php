@@ -72,7 +72,7 @@ $name = $_POST['name'];
 $tel = $_POST['tel'];
 $email = $_POST['email'];
 $bday = $_POST['bday'];
-$sex = $_POST['sex'];
+$sex = $_POST['sex'] == "on" ? "1" : "0";
 $bio = $_POST['bio'];
 $stmt->execute();
 
