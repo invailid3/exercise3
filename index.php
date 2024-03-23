@@ -1,53 +1,60 @@
 <?php
+
+$status_desc = array(
+    "1" => "ok",
+    "-1" => "Enter correct name",
+    "-2" => "Enter correct phone",
+    "-3" => "Enter correct email",
+    "-4" => "Select b-date",
+    "-5" => "Choose sex",
+    "-6" => "Choose favorite pl",
+    "-7"=> "Fill acception",
+);
+
 header('Content-Type: text/html; charset=UTF-8');
 
-if($_SERVER['$_REQUEST_METHOD'] == 'GET'){
-    if(!empty($_GET['save'])){
-        print('Thanks, the data has saved');
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+    if(!empty($_GET['status'])){
+        print(sprintf("<script>alert('%s');</script>", $status_desc[$_GET['status']]));
     }
-    include('form.php');
+    include('./form.html');
     exit();
 }
+
+$status = 1;
 
 $errors = FALSE;
 if(empty($_POST['name'])){
-    print('Fill the name.<br>');
-    $errors = TRUE;
+    $status = -1;
 }
 
 if(empty($_POST['tel']) || !preg_match('/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/', $_POST['tel'])){
-    print('Fill  phone.<br/>');
-    $errors = TRUE;
+    $status = $status == 1 ? -2: $status;
 }
 
 if(empty($_POST['email']) || !preg_match('/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/', $_POST['email'])){
-    print('Fill email.<br/>');
-    $errors = TRUE;
+    $status = $status == 1 ? -3: $status;
 }
 
-if(empty($_POST['data']) || !preg_match('/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/', $_POST['date'])){
-    print('Fill the date of birth day.<br/>');
-    $errors = TRUE;
+if(empty($_POST['bday'])){
+    $status = $status == 1 ? -4: $status;
 }
 
 if(empty($_POST['sex'])){
-    print('Choose sex.<br/>');
-    $errors = TRUE;
+    $status = $status == 1 ? -5: $status;
 }
 
-
-
 if(empty($_POST['pl'])){
-    print('Choose favorite programming language.<br/>');
-    $errors = TRUE;
+    $status = $status == 1 ? -6: $status;
 }
 
 if(empty($_POST['acception'])){
-    print('Fill ');
-    $errors = TRUE;
+    $status = $status == 1 ? -7: $status;
 }
 
-if($errors){
+if($status != 1){
+    header(sprintf('Location: /web-2-task-3/?status=%d', $status));
     exit();
 }
-?>
+
+header('Location: /web-2-task-3/?status=1');
