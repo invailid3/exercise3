@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 $status = 1;
 
 $errors = FALSE;
-if(empty($_POST['name'])){
+if(empty($_POST['name']) || strlen($_POST['name'])>150 || !preg_match("/^[\p{Cyrillic}a-zA-Z-' ]*$/u", $_POST['name'] )){
     $status = -1;
 }
 
@@ -44,7 +44,7 @@ if(empty($_POST['sex'])){
     $status = $status == 1 ? -5: $status;
 }
 
-if(empty($_POST['pl'])){
+if(empty($_POST['pl']) || count($_POST['pl'])<1){
     $status = $status == 1 ? -6: $status;
 }
 
@@ -56,5 +56,33 @@ if($status != 1){
     header(sprintf('Location: /web-2-task-3/?status=%d', $status));
     exit();
 }
+
+$user = 'u67353';
+$pass = '8375108';
+$db = new PDO('mysql:host=localhost;dbname=u67353', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$stmt = $db->prepare("INSERT INTO application (name, tel, email, bday, sex, bio) VALUES (:name, :tel, :email, :bday, :sex, :bio)");
+$stmt->bindParam(':name', $name);
+$stmt->bindParam(':tel', $tel);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':bday', $bday);
+$stmt->bindParam(':sex', $sex);
+$stmt->bindParam(':bio', $bio);
+$name = $_POST['name'];
+$tel = $_POST['tel'];
+$email = $_POST['email'];
+$bday = $_POST['bday'];
+$sex = $_POST['sex'];
+$bio = $_POST['bio'];
+$stmt->execute();
+
+$parent_id = $db->lastInsertId();
+$stmt = $db->prepare("INSERT INTO favoritelang (parent_id, pl) VALUES(:parent_id, :pl)");
+$stmt->bindParam(':parent_id',$parent_id);
+foreach ($_POST['pl'] as $pl){
+    $stmt->bindParam(':pl', $pl);
+    $stmt->execute();
+}
+
 
 header('Location: /web-2-task-3/?status=1');
